@@ -6,6 +6,7 @@ const TodoList = ({ tasks, setTask }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [taskToEdit, setTaskToEdit] = React.useState(null);
   const [editedTitle, setEditedTitle] = React.useState("");
+  const [active, setIsActive] = React.useState(false);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -35,10 +36,15 @@ const TodoList = ({ tasks, setTask }) => {
   };
 
   const handleDelete = (id) => {
-    const existingTasks = localStorage.getItem("task")
-      ? JSON.parse(localStorage.getItem("task"))
-      : [];
-    const updatedTasks = existingTasks.filter((task) => task.id !== id);
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    localStorage.setItem("task", JSON.stringify(updatedTasks));
+    setTask(updatedTasks);
+  };
+
+  const handleTaskStatus = (id) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
+    );
     localStorage.setItem("task", JSON.stringify(updatedTasks));
     setTask(updatedTasks);
   };
@@ -55,6 +61,12 @@ const TodoList = ({ tasks, setTask }) => {
               <p className="capitalize">{task.title}</p>
             </div>
             <div className=" flex justify-between items-center">
+              <button
+                className="mr-4 text-blue-500 hover:text-blue-600"
+                onClick={() => handleTaskStatus(task.id)}
+              >
+                {task.isCompleted ? "Mark Incomplete" : "Mark Complete"}
+              </button>
               <button
                 className="mr-4 hover:text-blue-600"
                 onClick={() => handleEdit(task.id)}
