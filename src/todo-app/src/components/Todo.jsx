@@ -1,40 +1,61 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TodoList from "./TodoList";
 
 const Todo = () => {
+  const [allTasks, setAllTasks] = React.useState([]);
+  const [displayTasks, setDisplayTasks] = React.useState([]);
   const [task, setTask] = React.useState({
     id: null,
     title: "",
     isCompleted: false,
   });
+
   const handleNewTask = (e) => {
-    const value = e.target.value;
-    if (value === "" || value.trim() === "") {
-      setTask("");
+    const value = e.target.value.trim();
+
+    if (!value) {
+      setTask({ id: null, title: "", isCompleted: false });
       return;
     }
-    setTask({ id: Date.now(), title: value.trim(), isCompleted: false });
+
+    setTask({ id: Date.now(), title: value, isCompleted: false });
   };
 
   const handleAddTask = () => {
-    if (task.title === "" || task.title.trim() === "") {
-      return;
-    }
-    const existingTasks = localStorage.getItem("task")
-      ? JSON.parse(localStorage.getItem("task"))
-      : [];
-    const updatedTasks = [...existingTasks, task];
-    localStorage.setItem("task", JSON.stringify(updatedTasks));
+    if (!task.title.trim()) return;
+
+    const updated = [...allTasks, task];
+    localStorage.setItem("task", JSON.stringify(updated));
+
+    setAllTasks(updated);
+    setDisplayTasks(updated); // update UI
+
     setTask({ id: null, title: "", isCompleted: false });
   };
 
-  const tasks = localStorage.getItem("task")
-    ? JSON.parse(localStorage.getItem("task"))
-    : [];
+  const handleFilterChange = (e) => {
+    const filter = e.target.value;
+
+    if (filter === "") {
+      setDisplayTasks(allTasks);
+    } else if (filter === "completed") {
+      setDisplayTasks(allTasks.filter((t) => t.isCompleted));
+    } else if (filter === "incomplete") {
+      setDisplayTasks(allTasks.filter((t) => !t.isCompleted));
+    }
+  };
+
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("task")) || [];
+    setAllTasks(saved);
+    setDisplayTasks(saved); // initial UI render
+  }, []);
+
   return (
     <div>
       <h1>Todo</h1>
-      <div className="m-10 p-4 flex gap-4">
+
+      <div className="m-4 p-4 flex gap-4">
         <input
           type="text"
           placeholder="Add a new task"
@@ -49,8 +70,19 @@ const Todo = () => {
           Add
         </button>
       </div>
-      <TodoList tasks={tasks} setTask={setTask} />
+
+      <select
+        onChange={handleFilterChange}
+        className="p-2 border-2 border-gray-300 text-black rounded bg-white m-4"
+      >
+        <option value="">All</option>
+        <option value="completed">Completed</option>
+        <option value="incomplete">Incomplete</option>
+      </select>
+
+      <TodoList tasks={displayTasks} setTask={setTask} />
     </div>
   );
 };
+
 export default Todo;
