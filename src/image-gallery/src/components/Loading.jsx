@@ -17,6 +17,7 @@ const Loading = () => {
           fill="#1C64Ffff"
         />
       </svg>
+      <span className="sr-only">Loading...</span>
     </div>
   );
 };
