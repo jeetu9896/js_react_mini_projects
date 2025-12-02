@@ -1,0 +1,81 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Center form container */
+form {
+  width: 380px;
+  padding: 28px 35px;
+  border-radius: 14px;
+  background: var(--form-bg, #ffffff);
+  color: var(--form-text, #213547);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.35s ease-in-out;
+}
+
+form h2 {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+form label {
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--label-color, #374151);
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="date"],
+form input[type="number"],
+form input[type="password"] {
+  padding: 12px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--input-border, #d1d5db);
+  background: var(--input-bg, #ffffff);
+  color: var(--input-text, #213547);
+  outline: none;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+form input:focus {
+  border-color: #646cff;
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.25);
+}
+
+form input[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background: #646cff;
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+form input[type="submit"]:hover {
+  background: #535bf2;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
