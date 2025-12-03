@@ -1,0 +1,98 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+/* Page setup */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+/* Accordion container */
+.accordion-container {
+  width: 400px;
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 16px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.12);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Title */
+.accordion-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+/* Each section */
+.accordion-item {
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  transition: 0.2s ease;
+}
+
+/* Summary title */
+.accordion-title {
+  padding: 14px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  background: #f9fafb;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.25s ease;
+}
+
+/* Hover effect */
+.accordion-title:hover {
+  background: #f3f4f6;
+}
+
+/* Content */
+.accordion-content {
+  padding: 14px 16px;
+  background: #ffffff;
+  color: #374151;
+  border-top: 1px solid #e5e7eb;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Rotate arrow on open */
+.accordion-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion-item summary::after {
+  content: "▸";
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.accordion-item[open] summary::after {
+  transform: rotate(90deg);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+  }
+}
