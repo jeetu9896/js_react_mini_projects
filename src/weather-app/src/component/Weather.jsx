@@ -1,11 +1,13 @@
 import { useEffect, useState, useCallback } from "react";
 import { debounce } from "../helper";
+import Forecast from "./Forecast";
 
 const key = import.meta.env.VITE_WEATHER_API_KEY;
 
 function Weather() {
   const [fetchedData, setFetchedData] = useState(null);
-
+  const [city, setCity] = useState("");
+  const [days, setDays] = useState();
   const fetchWeatherData = async (latitude, longitude) => {
     try {
       const response = await fetch(
@@ -13,6 +15,7 @@ function Weather() {
       );
       const data = await response.json();
       setFetchedData(data);
+      if (data?.location?.name) setCity(data.location.name);
     } catch (error) {
       console.error("Error fetching weather data:", error);
     }
@@ -32,8 +35,9 @@ function Weather() {
   };
 
   const debouncedCitySearch = useCallback(
-    debounce((city) => {
-      fetchWeatherByCity(city);
+    debounce((value) => {
+      fetchWeatherByCity(value);
+      setCity(value);
     }, 800),
     []
   );
@@ -59,11 +63,30 @@ function Weather() {
           placeholder="Enter city name"
           onChange={(e) => debouncedCitySearch(e.target.value)}
         />
+        <div>
+          <label htmlFor="days" style={{ marginLeft: 12 }}>
+            Forecast days:
+          </label>
+          <select
+            id="days"
+            value={days}
+            onChange={(e) => setDays(Number(e.target.value))}
+            style={{ marginLeft: 8 }}
+          >
+            {[1, 2, 3, 4, 5, 6, 7,8,9,10,11,12,13,14].map((d) => (
+              <option key={d} value={d}>
+                {d}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {fetchedData && (
         <div className="weather-card">
           <div className="weather-title">
+            <h2>Current Weather</h2>
+            {city && <option></option>}
             <img src={fetchedData?.current?.condition?.icon} alt="icon" />
             <h2>
               {fetchedData?.location?.name}, {fetchedData?.location?.region}
@@ -82,6 +105,10 @@ function Weather() {
           </div>
         </div>
       )}
+      <Forecast
+        city={city}
+        forecastDays={days}
+      />
     </div>
   );
 }
