@@ -8,6 +8,7 @@ function Weather() {
   const [fetchedData, setFetchedData] = useState(null);
   const [city, setCity] = useState("");
   const [days, setDays] = useState();
+
   const fetchWeatherData = async (latitude, longitude) => {
     try {
       const response = await fetch(
@@ -71,9 +72,9 @@ function Weather() {
             id="days"
             value={days}
             onChange={(e) => setDays(Number(e.target.value))}
-            style={{ marginLeft: 8 }}
+            style={{ marginLeft: 8 , padding: 4, backgroundColor: '#000000ff'}}
           >
-            {[1, 2, 3, 4, 5, 6, 7,8,9,10,11,12,13,14].map((d) => (
+            {[1, 2, 3].map((d) => (
               <option key={d} value={d}>
                 {d}
               </option>
