@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
+import Table from "./src/components/Table";
 
 const mockFetch = () =>
   new Promise((res) =>
@@ -141,6 +142,10 @@ const Dashboard = () => {
                 <li>Payment failed for order #998</li>
               </ul>
             </div>
+          </section>
+
+          <section className="table-section">
+            <Table />
           </section>
         </>
       )}

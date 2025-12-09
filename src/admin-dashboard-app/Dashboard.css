@@ -116,6 +116,10 @@
   display: block;
 }
 
+.table-section {
+  margin-top: 24px;
+}
+
 @media (max-width: 900px) {
   .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
